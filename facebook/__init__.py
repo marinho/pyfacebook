@@ -1405,6 +1405,7 @@ class Facebook(object):
             if k.startswith(prefix):
                 key = k.replace(prefix,"")
                 value = cookies[k]
+                if value == 'None': value = None
                 params[key] = value
                 vals += '%s=%s' % (key, value)
                 
@@ -1412,7 +1413,7 @@ class Facebook(object):
 
         hasher.update(self.secret_key)
         digest = hasher.hexdigest()
-        if digest == cookies[api_key]:
+        if digest == cookies[api_key] and params['user'] and params['session_key']:
             params['is_session_from_cookie'] = True
             return params
         else:

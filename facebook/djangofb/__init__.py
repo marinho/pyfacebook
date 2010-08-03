@@ -215,7 +215,10 @@ class FacebookMiddleware(object):
             if 'fb_sig_session_key' in request.GET and 'fb_sig_user' in request.GET:
                 request.facebook.session_key = request.session['facebook_session_key'] = request.GET['fb_sig_session_key']
                 request.facebook.uid = request.session['facebook_user_id'] = request.GET['fb_sig_user'] # by Marinho
-            elif request.session.get('facebook_session_key', None) and request.session.get('facebook_user_id', None):
+            elif request.session.get('facebook_session_key', None) and\
+                 request.session.get('facebook_user_id', None) and\
+                 request.session['facebook_session_key'] != 'None' and\
+                 request.session['facebook_user_id'] != 'None':
                 request.facebook.session_key = request.session['facebook_session_key']
                 request.facebook.uid = request.session['facebook_user_id']
 
