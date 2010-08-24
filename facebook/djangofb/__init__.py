@@ -223,6 +223,9 @@ class FacebookMiddleware(object):
                 request.facebook.uid = request.session['facebook_user_id']
 
     def process_response(self, request, response):
+        if not getattr(self, 'facebook', None): # by Marinho
+            return response
+
         #if not self.internal and request.facebook.session_key and request.facebook.uid:
         # by Marinho
         request.facebook.session_key = request.facebook.session_key == 'None' and None or request.facebook.session_key
@@ -237,7 +240,7 @@ class FacebookMiddleware(object):
 
         try:
             fb = request.facebook
-        except:
+        except AttributeError: # by marinho
             return response
 
         if not fb.is_session_from_cookie:
