@@ -977,7 +977,6 @@ class Facebook(object):
         for namespace in METHODS:
             self.__dict__[namespace] = eval('%sProxy(self, \'%s\')' % (namespace.title(), 'facebook.%s' % namespace))
 
-
     def _hash_args(self, args, secret=None):
         """Hashes arguments by joining key=value pairs, appending a secret, and then taking the MD5 hex digest."""
         # @author: houyr
