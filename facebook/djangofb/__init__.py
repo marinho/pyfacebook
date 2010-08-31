@@ -95,7 +95,6 @@ def require_login(next=None, internal=None):
 
             if internal and request.method == 'GET' and fb.app_name:
                 return fb.redirect('%s%s' % (fb.get_app_url(), next))
-
             return view(request, *args, **kwargs)
         newview.next = next
         newview.internal = internal
@@ -223,7 +222,7 @@ class FacebookMiddleware(object):
                 request.facebook.uid = request.session['facebook_user_id']
 
     def process_response(self, request, response):
-        if not getattr(self, 'facebook', None): # by Marinho
+        if not getattr(request, 'facebook', None): # by Marinho
             return response
 
         #if not self.internal and request.facebook.session_key and request.facebook.uid:
